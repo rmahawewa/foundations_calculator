@@ -9,16 +9,21 @@
 
 <body>
 
-
-
-
     <script>
         var count = 0;
         var statement = "0";
+        var result = 0;
         var operators = ["+", "-", "*", "/", "="];
+        var operators1 = ["+", "-", "*", "/"];
         var operator_array = [];
 
         document.addEventListener('keyup', (event) => {
+            // let word = "test==";
+            // let arr = word.split("=");
+            // console.log("compare:   " + isNaN(arr[10]));
+
+            // console.log("Hello World");
+
             let value = event.key;
             if (count === 0 && value.localeCompare("=") === 0) {
                 statement = statement.concat("");
@@ -29,19 +34,39 @@
                 if (operator_array.length === 1) {
                     let vals = statement.split(operator_array[0]);
                     if (!(isNaN(vals[1])) === true) {
-                        let result = operate(vals[0], vals[1], operator_array[0]);
-                        statement = result.concat(value);
+                        result = operate(vals[0], vals[1], operator_array[0]);
+                        console.log("valu0: " + vals[0]);
+                        console.log("value1: " + vals[1]);
+                        console.log("value 1 check: " + typeof (vals[1]));
+                        console.log(result);
+                        statement = result.toString().concat(value);
                         operator_array[0] = value;
+
                     } else {
-                        if (vals[1].localeCompare("") !== 0) {
-                            operator_array[0] = vals[1];
-                            statement = vals[0].concat(vals[1]);
+                        if (operator_array[0].localeCompare(value) === 0 && value.localeCompare("=") === 0) {
+                            statement = vals[0].concat(value);
+                            operator_array[0] = value;
+                        }
+                        if (operator_array[0].localeCompare("=") === 0 && operators1.includes(value)) {
+                            statement = vals[0].concat(value);
+                            console.log("12345");
+                            operator_array[0] = value;
+                        }
+                        if (operators1.includes(operator_array[0]) && value.localeCompare("=") === 0) {
+                            result = operate(vals[0], vals[0], operator_array[0]);
+                            statement = result.concat(value);
+                            operator_array[0] = value;
+                        }
+                        if (operators1.includes(operator_array[0]) && operators1.includes(value)) {
+                            statement = vals[0].concat(value);
+                            operator_array[0] = value;
                         }
                     }
                 }
                 if (operator_array.length === 0) {
                     operator_array[0] = value;
                     statement = statement.concat(value);
+                    //statement = "test1: " + value;
                 }
             } else {
                 if (isNaN(value) === false) {
@@ -49,12 +74,12 @@
                 }
                 if (value.localeCompare("c") === 0 || value.localeCompare("C") === 0) {
                     statement = "0";
+                    result = 0;
                     operator_array = [];
                 }
             }
-
-
-
+            console.log(statement);
+            console.log(result);
         });
 
         function operate(oprn1, oprn2, oprtr) {
@@ -74,6 +99,27 @@
                 return division(oprn1, oprn2);
             }
         }
+
+        function addition(a, b) {
+            let sum = Number(a) + Number(b);
+            return sum;
+        }
+
+        function subtraction(a, b) {
+            let result = Number(a) - Number(b);
+            return result;
+        }
+
+        function multiplication(a, b) {
+            let result = Number(a) * Number(b);
+            return result;
+        }
+
+        function division(a, b) {
+            let result = a / b;
+            return result;
+        }
+
     </script>
 </body>
 
