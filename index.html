@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+
+
+    <script>
+        var count = 0;
+        var statement = "0";
+        var operators = ["+", "-", "*", "/", "="];
+        var operator_array = [];
+
+        document.addEventListener('keyup', (event) => {
+            let value = event.key;
+            if (count === 0 && value.localeCompare("=") === 0) {
+                statement = statement.concat("");
+            }
+
+            if (operators.includes(value)) {
+
+                if (operator_array.length === 1) {
+                    let vals = statement.split(operator_array[0]);
+                    if (!(isNaN(vals[1])) === true) {
+                        let result = operate(vals[0], vals[1], operator_array[0]);
+                        statement = result.concat(value);
+                        operator_array[0] = value;
+                    } else {
+                        if (vals[1].localeCompare("") !== 0) {
+                            operator_array[0] = vals[1];
+                            statement = vals[0].concat(vals[1]);
+                        }
+                    }
+                }
+                if (operator_array.length === 0) {
+                    operator_array[0] = value;
+                    statement = statement.concat(value);
+                }
+            } else {
+                if (isNaN(value) === false) {
+                    statement = statement.concat(value);
+                }
+                if (value.localeCompare("c") === 0 || value.localeCompare("C") === 0) {
+                    statement = "0";
+                    operator_array = [];
+                }
+            }
+
+
+
+        });
+
+        function operate(oprn1, oprn2, oprtr) {
+            if (oprtr.localeCompare("=") === 0) {
+                return oprn2;
+            }
+            if (oprtr.localeCompare("+") === 0) {
+                return addition(oprn1, oprn2);
+            }
+            if (oprtr.localeCompare("-") === 0) {
+                return subtraction(oprn1, oprn2);
+            }
+            if (oprtr.localeCompare("*") === 0) {
+                return multiplication(oprn1, oprn2);
+            }
+            if (oprtr.localeCompare("/") === 0) {
+                return division(oprn1, oprn2);
+            }
+        }
+    </script>
+</body>
+
+</html>
