@@ -25,6 +25,15 @@
                 if (operator_array.length === 1) {
                     let vals = statement.split(operator_array[0]);
                     if (!(isNaN(vals[1])) === true && (vals[1].concat("test").localeCompare("test") + 1 !== 1)) {
+                        vals_0_length = vals[0].length;
+                        vals_1_length = vals[1].length;
+                        if (vals[0].toString().charAt(vals_0_length).localeCompare(".") === 0) {
+                            vals[0] = vals[0].concat("0");
+                        }
+                        if (vals[1].toString().charAt(vals_1_length).localeCompare(".") === 0) {
+                            vals[1] = vals[1].concat("0");
+                        }
+
                         result = operate(vals[0], vals[1], operator_array[0]);
                         statement = result.toString().concat(value);
                         operator_array[0] = value;
@@ -39,6 +48,12 @@
                             operator_array[0] = value;
                         }
                         if (operators1.includes(operator_array[0]) && value.localeCompare("=") === 0) {
+                            let vals_0_length = vals[0].length;
+                            if (vals[0].charAt(vals_0_length).localeCompare(".") === 0) {
+                                vals[0] = vals[0].concat(0);
+                            }
+
+                            vals[0] = vals[0].toString().concat();
                             result = operate(vals[0], vals[0], operator_array[0]);
                             statement = result.toString().concat(value);
                             operator_array[0] = value;
@@ -59,12 +74,24 @@
                     let valu1 = statement.split(".");
                     console.log("statement: " + statement);
                     console.log("valu 1 length: " + valu1.length);
+                    if (valu1.length === 1) {
+                        statement = statement.concat(value);
+                    }
+                    // else if(valu1.length === 2){
 
-                } else {
-                    let vals = statement.split(operator_array[0]);
-                    if (vals[1].toString().concat("test").localeCompare("test") + 1 !== 1) {
+                    // }                   
 
-                        statement = vals[0].concat(".");
+                } else if (operator_array.length === 1) {
+                    let vals = statement.split(operator_array[0]); //12.0 + 12.0 => [12.0, 12.0]
+                    if (vals[1].toString().concat("test").localeCompare("test") + 1 !== 1) { //12.0
+                        let check = vals[1].split(".");//[12, 0]
+                        console.log(check);
+                        console.log(check.length);
+                        if (check.length > 1) {
+
+                        } else if (check.length === 1) {
+                            statement = statement.concat(value);
+                        }
                     }
                 }
             } else {
