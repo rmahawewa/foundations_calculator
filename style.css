@@ -1,0 +1,34 @@
+.button {
+    width: 70px;
+    height: 70px;
+}
+
+#multiplication_button {
+    width: 140px;
+}
+
+#addition_button {
+    height: 140px;
+}
+
+.nb {
+    font-weight: bold;
+}
+
+label {
+    background-color: darkcyan;
+    color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 275px;
+}
+
+#result {
+    margin-top: 2px;
+    margin-bottom: 1px;
+}
+
+#expression {
+    margin-top: 1px;
+    margin-bottom: 3px;
+}

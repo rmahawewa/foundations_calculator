@@ -5,83 +5,276 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
     <div class="keypad">
-        <div>
-            <div class="row1">
-                <div class="clear_button">
-
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <div class="container" style="border-style: solid;">
+                <div class="row0"
+                    style="display: flex; flex-direction: column; font-family: Arial, Helvetica, sans-serif; align-items: center;">
+                    <label id="result">00</label>
+                    <label id="expression">00</label>
                 </div>
-                <div class="division_button">
-
-                </div>
-                <div class="multiplication_button">
-
-                </div>
-            </div>
-            <div class="row2">
-                <div class="btn_number7">
-
-                </div>
-                <div class="btn_number8">
-
-                </div>
-                <div class="btn_number9">
-
-                </div>
-            </div>
-            <div class="row3">
-                <div class="col1">
-                    <div class="btn_number4">
-
+                <div class="row1" style="display: flex;">
+                    <div class="clear_button">
+                        <input type="button" class="button" id="clear_button" value="C">
                     </div>
-                    <div class="btn_number1">
-
+                    <div class="division_button">
+                        <input type="button" class="button" id="division_button" value="/">
+                    </div>
+                    <div class="multiplication_button">
+                        <input type="button" class="button" id="multiplication_button" value="*">
                     </div>
                 </div>
-                <div class="col2">
-                    <div class="btn_number5">
-
+                <div class="row2" style="display: flex;">
+                    <div class="btn_number7">
+                        <input type="button" class="button nb" id="btn_number7" value="7">
                     </div>
-                    <div class="btn_number2">
-
+                    <div class="btn_number8">
+                        <input type="button" class="button nb" id="btn_number8" value="8">
                     </div>
-                </div>
-                <div class="col3">
-                    <div class="btn_number6">
-
+                    <div class="btn_number9">
+                        <input type="button" class="button nb" id="btn_number9" value="9">
                     </div>
-                    <div class="btn_number3">
-
+                    <div class="btn_minus">
+                        <input type="button" class="button" id="btn_minus" value="-">
                     </div>
                 </div>
-                <div class="col4">
-                    <div>
-                        <div class="addition_button">
-
+                <div class="row3" style="display: flex;">
+                    <div class="col1">
+                        <div class="btn_number4">
+                            <input type="button" class="button nb" id="btn_number4" value="4">
+                        </div>
+                        <div class="btn_number1">
+                            <input type="button" class="button nb" id="btn_number1" value="1">
+                        </div>
+                    </div>
+                    <div class="col2">
+                        <div class="btn_number5">
+                            <input type="button" class="button nb" id="btn_number5" value="5">
+                        </div>
+                        <div class="btn_number2">
+                            <input type="button" class="button nb" id="btn_number2" value="2">
+                        </div>
+                    </div>
+                    <div class="col3">
+                        <div class="btn_number6">
+                            <input type="button" class="button nb" id="btn_number6" value="6">
+                        </div>
+                        <div class="btn_number3">
+                            <input type="button" class="button nb" id="btn_number3" value="3">
+                        </div>
+                    </div>
+                    <div class="col4">
+                        <div>
+                            <div class="addition_button">
+                                <input type="button" class="button" id="addition_button" value="+">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row4">
-                <div class="button_point_notation">
-
-                </div>
-                <div class="button_number_zero">
-
-                </div>
-                <div class="equal_sign_button">
-
+                <div class="row4" style="display: flex;">
+                    <div class="posivive_negative_button">
+                        <input type="button" class="button" id="posivive_negative_button" value="+/-">
+                    </div>
+                    <div class="button_point_notation">
+                        <input type="button" class="button nb" id="button_point_notation" value=".">
+                    </div>
+                    <div class="button_number_zero">
+                        <input type="button" class="button nb" id="button_number_zero" value="0">
+                    </div>
+                    <div class="equal_sign_button">
+                        <input type="button" class="button" id="equal_sign_button" value="=">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        var statement = "0";
+        var result = 0;
+        var operators = ["+", "-", "*", "/", "="];
+        var operators1 = ["+", "-", "*", "/"];
+        var operator_array = [];
 
+        document.addEventListener('keyup', (event) => {
+
+            let value = event.key;
+
+            if (operators.includes(value)) {
+
+                if (operator_array.length === 1) {
+                    let vals = statement.split(operator_array[0]);
+                    if (!(isNaN(vals[1])) === true && (vals[1].concat("test").localeCompare("test") + 1 !== 1)) {
+                        vals_0_length = vals[0].length;
+                        vals_1_length = vals[1].length;
+                        if (vals[0].toString().charAt(vals_0_length).localeCompare(".") === 0) {
+                            vals[0] = vals[0].concat("0");
+                        }
+                        if (vals[1].toString().charAt(vals_1_length).localeCompare(".") === 0) {
+                            vals[1] = vals[1].concat("0");
+                        }
+
+                        result = operate(vals[0], vals[1], operator_array[0]);
+                        statement = result.toString().concat(value);
+                        operator_array[0] = value;
+
+                    } else {
+                        if (operator_array[0].localeCompare(value) === 0 && value.localeCompare("=") === 0) {
+                            statement = vals[0].concat(value);
+                            operator_array[0] = value;
+                        }
+                        if (operator_array[0].localeCompare("=") === 0 && operators1.includes(value)) {
+                            statement = vals[0].concat(value);
+                            operator_array[0] = value;
+                        }
+                        if (operators1.includes(operator_array[0]) && value.localeCompare("=") === 0) {
+                            let vals_0_length = vals[0].length;
+                            if (vals[0].charAt(vals_0_length).localeCompare(".") === 0) {
+                                vals[0] = vals[0].concat(0);
+                            }
+
+                            vals[0] = vals[0].toString().concat();
+                            result = operate(vals[0], vals[0], operator_array[0]);
+                            statement = result.toString().concat(value);
+                            operator_array[0] = value;
+                        }
+                        if (operators1.includes(operator_array[0]) && operators1.includes(value)) {
+                            statement = vals[0].concat(value);
+                            operator_array[0] = value;
+                        }
+                    }
+                }
+                if (operator_array.length === 0) {
+                    operator_array[0] = value;
+                    console.log("statement1: " + statement);
+                    statement = statement.toString().concat(value);
+                }
+            } else if (value.localeCompare(".") === 0) {
+                console.log("decimal place");
+                if (operator_array.length === 0) {
+                    if (statement.length === 0) {
+                        statement = "0".concat(value);
+                    } else {
+                        let valu1 = statement.split(".");
+                        console.log("statement: " + statement);
+                        console.log("valu 1 length: " + valu1.length);
+                        if (valu1.length === 1) {
+                            statement = statement.concat(value);
+                        }
+                    }
+                } else if (operator_array.length === 1) {
+                    let vals = statement.split(operator_array[0]); //12.0 + 12.0 => [12.0, 12.0]
+                    if (vals[1].toString().concat("test").localeCompare("test") + 1 !== 1) { //12.0
+                        let check = vals[1].split(".");//[12, 0]
+                        if (check.length > 1) {
+
+                        } else if (check.length === 1) {
+                            statement = statement.concat(value);
+                        }
+                    } else {
+                        statement = statement.concat("0" + value);
+                    }
+                }
+            } else if (value.localeCompare("p") === 0) {
+                let statement_length = statement.length;
+                console.log("statement length: " + statement_length);
+                let statement_final_charactor = statement.charAt(statement_length - 1);
+                console.log("statement final charactor: " + statement_final_charactor);
+
+                if (operator_array.length === 1) {
+                    if (operators.includes(statement_final_charactor)) {
+                        let vals = statement.split(operator_array[0]);
+                        vals[0] = vals[0] * (-1);
+                        result = result * (-1);
+                        statement = vals[0].toString().concat(statement_final_charactor);
+                    } else {
+                        let vals = statement.split(operator_array[0]);
+                        if (vals[1].toString().concat("test").localeCompare("test") + 1 !== 1) {
+                            vals[1] = vals[1] * (-1);
+                            statement = vals.join(operator_array[0]);
+                        }
+                    }
+                } else {
+                    if (isNaN(statement) === false) {
+                        statement = statement * (-1);
+                    }
+                }
+
+            } else {
+                if (isNaN(value) === false) {
+                    statement = statement.concat(value);
+                }
+                if (value.localeCompare("c") === 0 || value.localeCompare("C") === 0) {
+                    statement = "0";
+                    result = 0;
+                    operator_array = [];
+                }
+            }
+            console.log(statement);
+            console.log(result);
+        });
+
+        function operate(oprn1, oprn2, oprtr) {
+            if (oprtr.localeCompare("=") === 0) {
+                return oprn2;
+            }
+            if (oprtr.localeCompare("+") === 0) {
+                let v = Math.abs(addition(oprn1, oprn2));
+                if (v > 1000) {
+                    return ("present maximum value exeeded");
+                }
+                return addition(oprn1, oprn2);
+            }
+            if (oprtr.localeCompare("-") === 0) {
+                let v = Math.abs(subtraction(oprn1, oprn2));
+                if (v > 1000) {
+                    return ("present maximum value exeeded");
+                }
+                return subtraction(oprn1, oprn2);
+            }
+            if (oprtr.localeCompare("*") === 0) {
+                let v = Math.abs(multiplication(oprn1, oprn2));
+                if (v > 1000) {
+                    return ("present maximum value exeeded");
+                }
+                return multiplication(oprn1, oprn2);
+            }
+            if (oprtr.localeCompare("/") === 0) {
+                if (Number(oprn2) === 0) {
+                    return ("Please use another calculator for now");
+                }
+                let v = Math.abs(division(oprn1, oprn2));
+                if (v > 1000) {
+                    return ("present maximum value exeeded");
+                }
+                return division(oprn1, oprn2);
+            }
+        }
+
+        function addition(a, b) {
+            let sum = Number(a) + Number(b);
+            return sum;
+        }
+
+        function subtraction(a, b) {
+            let result = Number(a) - Number(b);
+            return result;
+        }
+
+        function multiplication(a, b) {
+            let result = Number(a) * Number(b);
+            return result;
+        }
+
+        function division(a, b) {
+            let result = a / b;
+            return result;
+        }
     </script>
 </body>
 
