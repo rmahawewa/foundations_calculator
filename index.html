@@ -12,82 +12,94 @@
 
     <div class="keypad">
         <div style="display: flex; flex-direction: column; align-items: center;">
+            <h2 style="font-family: Arial, Helvetica, sans-serif; color: coral;">Calculator</h2>
             <div class="container" style="border-style: solid;">
                 <div class="row0"
                     style="display: flex; flex-direction: column; font-family: Arial, Helvetica, sans-serif; align-items: center;">
-                    <label id="result">00</label>
-                    <label id="expression">00</label>
+                    <label id="result">0</label>
+                    <label id="expression">0</label>
                 </div>
                 <div class="row1" style="display: flex;">
                     <div class="clear_button">
-                        <input type="button" class="button" id="clear_button" value="C">
+                        <input type="button" class="button" id="clear_button" onclick="calc(this.value)" value="C">
                     </div>
                     <div class="division_button">
-                        <input type="button" class="button" id="division_button" value="/">
+                        <input type="button" class="button" id="division_button" onclick="calc(this.value)" value="/">
                     </div>
                     <div class="multiplication_button">
-                        <input type="button" class="button" id="multiplication_button" value="*">
+                        <input type="button" class="button" id="multiplication_button" onclick="calc(this.value)"
+                            value="*">
                     </div>
                 </div>
                 <div class="row2" style="display: flex;">
                     <div class="btn_number7">
-                        <input type="button" class="button nb" id="btn_number7" value="7">
+                        <input type="button" class="button nb" id="btn_number7" onclick="calc(this.value)" value="7">
                     </div>
                     <div class="btn_number8">
-                        <input type="button" class="button nb" id="btn_number8" value="8">
+                        <input type="button" class="button nb" id="btn_number8" onclick="calc(this.value)" value="8">
                     </div>
                     <div class="btn_number9">
-                        <input type="button" class="button nb" id="btn_number9" value="9">
+                        <input type="button" class="button nb" id="btn_number9" onclick="calc(this.value)" value="9">
                     </div>
                     <div class="btn_minus">
-                        <input type="button" class="button" id="btn_minus" value="-">
+                        <input type="button" class="button" id="btn_minus" onclick="calc(this.value)" value="-">
                     </div>
                 </div>
                 <div class="row3" style="display: flex;">
                     <div class="col1">
                         <div class="btn_number4">
-                            <input type="button" class="button nb" id="btn_number4" value="4">
+                            <input type="button" class="button nb" id="btn_number4" onclick="calc(this.value)"
+                                value="4">
                         </div>
                         <div class="btn_number1">
-                            <input type="button" class="button nb" id="btn_number1" value="1">
+                            <input type="button" class="button nb" id="btn_number1" onclick="calc(this.value)"
+                                value="1">
                         </div>
                     </div>
                     <div class="col2">
                         <div class="btn_number5">
-                            <input type="button" class="button nb" id="btn_number5" value="5">
+                            <input type="button" class="button nb" id="btn_number5" onclick="calc(this.value)"
+                                value="5">
                         </div>
                         <div class="btn_number2">
-                            <input type="button" class="button nb" id="btn_number2" value="2">
+                            <input type="button" class="button nb" id="btn_number2" onclick="calc(this.value)"
+                                value="2">
                         </div>
                     </div>
                     <div class="col3">
                         <div class="btn_number6">
-                            <input type="button" class="button nb" id="btn_number6" value="6">
+                            <input type="button" class="button nb" id="btn_number6" onclick="calc(this.value)"
+                                value="6">
                         </div>
                         <div class="btn_number3">
-                            <input type="button" class="button nb" id="btn_number3" value="3">
+                            <input type="button" class="button nb" id="btn_number3" onclick="calc(this.value)"
+                                value="3">
                         </div>
                     </div>
                     <div class="col4">
                         <div>
                             <div class="addition_button">
-                                <input type="button" class="button" id="addition_button" value="+">
+                                <input type="button" class="button" id="addition_button" onclick="calc(this.value)"
+                                    value="+">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row4" style="display: flex;">
                     <div class="posivive_negative_button">
-                        <input type="button" class="button" id="posivive_negative_button" value="+/-">
+                        <input type="button" class="button" id="posivive_negative_button" onclick="calc('p')"
+                            value="+/-">
                     </div>
                     <div class="button_point_notation">
-                        <input type="button" class="button nb" id="button_point_notation" value=".">
+                        <input type="button" class="button nb" id="button_point_notation" onclick="calc(this.value)"
+                            value=".">
                     </div>
                     <div class="button_number_zero">
-                        <input type="button" class="button nb" id="button_number_zero" value="0">
+                        <input type="button" class="button nb" id="button_number_zero" onclick="calc(this.value)"
+                            value="0">
                     </div>
                     <div class="equal_sign_button">
-                        <input type="button" class="button" id="equal_sign_button" value="=">
+                        <input type="button" class="button" id="equal_sign_button" onclick="calc(this.value)" value="=">
                     </div>
                 </div>
             </div>
@@ -101,10 +113,25 @@
         var operators1 = ["+", "-", "*", "/"];
         var operator_array = [];
 
+        function calc(value) {
+            //alert(value);
+            let output_array = get_result(value);
+
+            document.getElementById("expression").innerHTML = output_array[0];
+            document.getElementById("result").innerHTML = output_array[1];
+        }
+
         document.addEventListener('keyup', (event) => {
 
             let value = event.key;
+            let output_array = get_result(value);
 
+            document.getElementById("expression").innerHTML = output_array[0];
+            document.getElementById("result").innerHTML = output_array[1];
+
+        });
+
+        function get_result(value) {
             if (operators.includes(value)) {
 
                 if (operator_array.length === 1) {
@@ -120,8 +147,12 @@
                         }
 
                         result = operate(vals[0], vals[1], operator_array[0]);
-                        statement = result.toString().concat(value);
-                        operator_array[0] = value;
+                        if (isNaN(result)) {
+                            statement = result.toString();
+                        } else {
+                            statement = result.toString().concat(value);
+                            operator_array[0] = value;
+                        }
 
                     } else {
                         if (operator_array[0].localeCompare(value) === 0 && value.localeCompare("=") === 0) {
@@ -140,8 +171,12 @@
 
                             vals[0] = vals[0].toString().concat();
                             result = operate(vals[0], vals[0], operator_array[0]);
-                            statement = result.toString().concat(value);
-                            operator_array[0] = value;
+                            if (isNaN(result) === 0) {
+                                statement = result.toString();
+                            } else {
+                                statement = result.toString().concat(value);
+                                operator_array[0] = value;
+                            }
                         }
                         if (operators1.includes(operator_array[0]) && operators1.includes(value)) {
                             statement = vals[0].concat(value);
@@ -152,6 +187,7 @@
                 if (operator_array.length === 0) {
                     operator_array[0] = value;
                     console.log("statement1: " + statement);
+                    statement = Number(statement).toString();
                     statement = statement.toString().concat(value);
                 }
             } else if (value.localeCompare(".") === 0) {
@@ -164,6 +200,7 @@
                         console.log("statement: " + statement);
                         console.log("valu 1 length: " + valu1.length);
                         if (valu1.length === 1) {
+                            statement = Number(statement).toString();
                             statement = statement.concat(value);
                         }
                     }
@@ -190,10 +227,12 @@
                     if (operators.includes(statement_final_charactor)) {
                         let vals = statement.split(operator_array[0]);
                         vals[0] = vals[0] * (-1);
+                        vals[0] = Number(vals[0].toString());
                         result = result * (-1);
                         statement = vals[0].toString().concat(statement_final_charactor);
                     } else {
                         let vals = statement.split(operator_array[0]);
+                        vals[0] = (Number(vals[0].toString())).toString();
                         if (vals[1].toString().concat("test").localeCompare("test") + 1 !== 1) {
                             vals[1] = vals[1] * (-1);
                             statement = vals.join(operator_array[0]);
@@ -217,42 +256,51 @@
             }
             console.log(statement);
             console.log(result);
-        });
+
+            let output = [statement, result];
+            return output;
+        }
 
         function operate(oprn1, oprn2, oprtr) {
             if (oprtr.localeCompare("=") === 0) {
                 return oprn2;
             }
             if (oprtr.localeCompare("+") === 0) {
-                let v = Math.abs(addition(oprn1, oprn2));
-                if (v > 1000) {
-                    return ("present maximum value exeeded");
+                var v = addition(oprn1, oprn2);
+                if (isNaN(v)) {
+                    return ("present maximum range exeeded");
+                } else {
+                    return v;
                 }
-                return addition(oprn1, oprn2);
             }
             if (oprtr.localeCompare("-") === 0) {
-                let v = Math.abs(subtraction(oprn1, oprn2));
-                if (v > 1000) {
-                    return ("present maximum value exeeded");
+                var v = subtraction(oprn1, oprn2);
+                if (isNaN(v)) {
+                    return ("present maximum range exeeded");
+                } else {
+                    return v;
                 }
-                return subtraction(oprn1, oprn2);
             }
             if (oprtr.localeCompare("*") === 0) {
-                let v = Math.abs(multiplication(oprn1, oprn2));
-                if (v > 1000) {
-                    return ("present maximum value exeeded");
+                var v = multiplication(oprn1, oprn2);
+                if (isNaN(v)) {
+                    return ("present maximum range exeeded");
+                } else {
+                    return v;
                 }
-                return multiplication(oprn1, oprn2);
             }
             if (oprtr.localeCompare("/") === 0) {
                 if (Number(oprn2) === 0) {
-                    return ("Please use another calculator for now");
+                    if (oprn1 > 0) return "infinity";
+                    if (oprn1 < 0) return "minus infinity";
+                    if (oprn1 === 0) return "value undefined";
                 }
-                let v = Math.abs(division(oprn1, oprn2));
-                if (v > 1000) {
-                    return ("present maximum value exeeded");
+                var v = division(oprn1, oprn2);
+                if (isNaN(v)) {
+                    return ("present maximum range exeeded");
+                } else {
+                    return v;
                 }
-                return division(oprn1, oprn2);
             }
         }
 
