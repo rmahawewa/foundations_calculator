@@ -11,15 +11,16 @@
 <body>
 
     <div class="keypad">
-        <div style="display: flex; flex-direction: column; align-items: center;">
-            <h2 style="font-family: Arial, Helvetica, sans-serif; color: coral;">Calculator</h2>
-            <div class="container" style="border-style: solid;">
-                <div class="row0"
-                    style="display: flex; flex-direction: column; font-family: Arial, Helvetica, sans-serif; align-items: center;">
-                    <label id="result">0</label>
-                    <label id="expression">0</label>
+        <div class="keypad-inner">
+            <h2>Calculator</h2>
+            <div class="container">
+                <div class="row row0">
+                    <!-- <div> -->
+                        <label id="result">0</label>
+                        <label id="expression">0</label>
+                    <!-- </div>                     -->
                 </div>
-                <div class="row1" style="display: flex;">
+                <div class="row keypad-row row1">
                     <div class="clear_button">
                         <input type="button" class="button" id="clear_button" onclick="calc(this.value)" value="C">
                     </div>
@@ -31,7 +32,7 @@
                             value="*">
                     </div>
                 </div>
-                <div class="row2" style="display: flex;">
+                <div class="row keypad-row row2">
                     <div class="btn_number7">
                         <input type="button" class="button nb" id="btn_number7" onclick="calc(this.value)" value="7">
                     </div>
@@ -45,7 +46,7 @@
                         <input type="button" class="button" id="btn_minus" onclick="calc(this.value)" value="-">
                     </div>
                 </div>
-                <div class="row3" style="display: flex;">
+                <div class="row keypad-row row3" style="padding-left: 1rem; padding-right: 1rem;">
                     <div class="col1">
                         <div class="btn_number4">
                             <input type="button" class="button nb" id="btn_number4" onclick="calc(this.value)"
@@ -85,7 +86,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row4" style="display: flex;">
+                <div class="row keypad-row row4">
                     <div class="posivive_negative_button">
                         <input type="button" class="button" id="posivive_negative_button" onclick="calc('p')"
                             value="+/-">
@@ -124,11 +125,9 @@
         document.addEventListener('keyup', (event) => {
 
             let value = event.key;
-            let output_array = get_result(value);
-
-            document.getElementById("expression").innerHTML = output_array[0];
-            document.getElementById("result").innerHTML = output_array[1];
-
+            console.log("value: " + value);
+            value = (value.localeCompare("Enter") === 0 ? "=" : value);
+            calc(value);
         });
 
         function get_result(value) {
@@ -186,7 +185,6 @@
                 }
                 if (operator_array.length === 0) {
                     operator_array[0] = value;
-                    console.log("statement1: " + statement);
                     statement = Number(statement).toString();
                     statement = statement.toString().concat(value);
                 }
@@ -197,8 +195,6 @@
                         statement = "0".concat(value);
                     } else {
                         let valu1 = statement.split(".");
-                        console.log("statement: " + statement);
-                        console.log("valu 1 length: " + valu1.length);
                         if (valu1.length === 1) {
                             statement = Number(statement).toString();
                             statement = statement.concat(value);
@@ -219,9 +215,7 @@
                 }
             } else if (value.localeCompare("p") === 0) {
                 let statement_length = statement.length;
-                console.log("statement length: " + statement_length);
                 let statement_final_charactor = statement.charAt(statement_length - 1);
-                console.log("statement final charactor: " + statement_final_charactor);
 
                 if (operator_array.length === 1) {
                     if (operators.includes(statement_final_charactor)) {
@@ -254,9 +248,6 @@
                     operator_array = [];
                 }
             }
-            console.log(statement);
-            console.log(result);
-
             let output = [statement, result];
             return output;
         }
